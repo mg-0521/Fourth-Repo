@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags for character set and responsive viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title -->
+    <title>Clinic Management System | Professional Portal</title>
+    <!-- Boxicons for icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <!-- Google Fonts: Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- External CSS file -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ==================== LANDING SECTION ==================== -->
+    <!-- Initial view with hero content -->
+    <div id="landing-section" class="centered-view">
+        <!-- Navigation bar fixed at top -->
+        <nav style="position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; padding: 20px 5%;">
+            <!-- Brand/logo -->
+            <div style="font-size: 1.5rem; font-weight: 800;">Clinic MS</div>
+            <!-- Button to open login/auth view -->
+            <button onclick="showAuth()" style="padding: 10px 24px; border: 2px solid var(--accent-blue); background: transparent; color: var(--accent-blue); border-radius: 12px; font-weight: 700; cursor: pointer;">
+                Portal Login
+            </button>
+        </nav>
+        <!-- Hero content -->
+        <div class="hero">
+            <h1 style="font-size: 5rem; font-weight: 800; margin-bottom: 20px;">Advanced Clinic Portal</h1>
+            <!-- Primary call-to-action button -->
+            <button onclick="showAuth()" class="btn-primary" style="width: auto; padding: 18px 50px;">
+                Enter Portal
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== AUTH SECTION ==================== -->
+    <!-- Login/authentication view (hidden by default) -->
+    <div id="auth-section" class="centered-view hidden">
+        <div class="login-box">
+            <!-- Back button to return to landing -->
+            <button onclick="showLanding()" style="margin-bottom: 30px; padding: 8px 20px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: white; cursor: pointer;">
+                ← Back
+            </button>
+            <h2>Authorized Access</h2>
+            <!-- Login form -->
+            <form id="login-form" class="modern-form single-col">
+                <!-- Email input -->
+                <input type="email" id="login-email" placeholder="Email" required>
+                <!-- Password input -->
+                <input type="password" id="login-pass" placeholder="Password" required>
+                <!-- Submit button -->
+                <button type="submit" class="btn-primary">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== DASHBOARD SECTION ==================== -->
+    <!-- Main dashboard view (hidden by default) -->
+    <div id="dashboard-section" class="dashboard-wrapper hidden">
+        <!-- Sidebar navigation -->
+        <aside class="sidebar">
+            <!-- Brand name -->
+            <div style="color: var(--accent-blue); font-size: 1.5rem; font-weight: 800; margin-bottom: 40px;">
+                Clinic MS
+            </div>
+            <!-- Navigation menu -->
+            <nav>
+                <!-- Home menu item -->
+                <li id="nav-home" onclick="showView('home')"><i class='bx bxs-home'></i> <span>Home</span></li>
+                <!-- New Patient menu item (hidden by default) -->
+                <li id="nav-generate" class="hidden" onclick="showView('generate')"><i class='bx bxs-user-plus'></i> <span>New Patient</span></li>
+                <!-- Patient Queue menu item (hidden by default) -->
+                <li id="nav-queue" class="hidden" onclick="showView('queue')"><i class='bx bxs-group'></i> <span>Patient Queue</span></li>
+                <!-- Medicine Bill menu item (hidden by default) -->
+                <li id="nav-billing" class="hidden" onclick="showView('billing')"><i class='bx bxs-receipt'></i> <span>Medicine Bill</span></li>
+            </nav>
+            <!-- Live clock display -->
+            <div id="live-clock" style="margin-top: auto; padding: 15px; color: var(--accent-blue); font-family: monospace;">
+                00:00:00
+            </div>
+            <!-- Logout button -->
+            <button id="logout-btn" style="margin-top: 20px; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: none; padding: 16px; border-radius: 14px; cursor: pointer; font-weight: 700;">
+                Logout
+            </button>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="main-content">
+            <!-- Dashboard header -->
+            <header>
+                <h2 id="view-title">Dashboard</h2>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <!-- Badge showing user role -->
+                    <span id="user-role-badge" style="background: var(--accent-blue); padding: 8px 16px; border-radius: 30px; font-size: 0.8rem; font-weight: 800;">
+                        ROLE
+                    </span>
+                    <!-- User name display -->
+                    <span id="user-name-display">User</span>
+                </div>
+            </header>
+
+            <!-- ===== VIEW: HOME ===== -->
+            <!-- Home/dashboard overview panel -->
+            <div id="view-home" class="view-panel">
+                <!-- Welcome card -->
+                <div class="card" style="background: linear-gradient(135deg, var(--accent-blue), #1e40af); border: none; padding: 60px;">
+                    <h1 style="font-size: 2.5rem;">Welcome Back, <span id="welcome-name">User</span>!</h1>
+                </div>
+                <!-- Stats grid -->
+                <div class="stats-grid">
+                    <!-- Total Patients stat -->
+                    <div class="stat-card">
+                        <i class='bx bx-group'></i>
+                        <div>
+                            <p>Total Patients</p>
+                            <h2 id="home-stat-patients">0</h2>
+                        </div>
+                    </div>
+                    <!-- Revenue Today stat -->
+                    <div class="stat-card">
+                        <i class='bx bx-dollar-circle' style="color: #10b981;"></i>
+                        <div>
+                            <p>Revenue Today</p>
+                            <h2 id="home-stat-revenue">$0</h2>
+                        </div>
+                    </div>
+                    <!-- In Queue stat -->
+                    <div class="stat-card">
+                        <i class='bx bx-time' style="color: #f59e0b;"></i>
+                        <div>
+                            <p>In Queue</p>
+                            <h2 id="home-stat-queue">0</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chart container for revenue visualization -->
+                <div class="card"><canvas id="revenueChart" style="max-height: 400px;"></canvas></div>
+            </div>
+
+            <!-- ===== VIEW: DIAGNOSIS ===== -->
+            <!-- Consultation/diagnosis panel (hidden by default) -->
+            <div id="view-diagnosis" class="view-panel hidden">
+                <div class="card">
+                    <h3>Consultation: <span id="diag-patient-name"></span></h3>
+                    <!-- Diagnosis form -->
+                    <form id="diagnosis-form" class="modern-form">
+                        <!-- Hidden field for token ID -->
+                        <input type="hidden" id="diag-token-id">
+                        <!-- Diagnosis textarea -->
+                        <div><label>Diagnosis</label><textarea id="diag-text" required></textarea></div>
+                        <!-- Prescription textarea -->
+                        <div><label>Prescription</label><textarea id="diag-prescription" required></textarea></div>
+                        <!-- Submit button -->
+                        <button type="submit" class="btn-primary full-width">Complete Consultation</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ===== VIEW: QUEUE ===== -->
+            <!-- Patient queue management panel (hidden by default) -->
+            <div id="view-queue" class="view-panel hidden">
+                <div class="card">
+                    <!-- Queue header with search -->
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
+                        <h3>Active Queue</h3>
+                        <!-- Search input for filtering queue -->
+                        <input type="text" id="queue-search" placeholder="Search patient..." oninput="filterQueue()" style="width: 300px; padding: 10px; border-radius: 10px; background: #0a0f1d; border: 1px solid var(--border); color: white;">
+                    </div>
+                    <!-- Queue table -->
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th>Patient</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <!-- Dynamic queue content will be inserted here -->
+                        <tbody id="queue-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== VIEW: BILLING ===== -->
+            <!-- Medicine billing panel (hidden by default) -->
+            <div id="view-billing" class="view-panel hidden">
+                <div class="card">
+                    <h3>Medicine Bill</h3>
+                    <!-- Billing table -->
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Diagnosis</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <!-- Dynamic billing content will be inserted here -->
+                        <tbody id="billing-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== VIEW: GENERATE ===== -->
+            <!-- New patient registration panel (hidden by default) -->
+            <div id="view-generate" class="view-panel hidden">
+                <div class="card">
+                    <h3>New Patient</h3>
+                    <!-- Patient registration form -->
+                    <form id="token-form" class="modern-form">
+                        <!-- Full name input -->
+                        <div class="full-width"><input type="text" id="pat-name" placeholder="Full Name" required></div>
+                        <!-- Age input -->
+                        <input type="number" id="pat-age" placeholder="Age" required>
+                        <!-- Contact number input -->
+                        <input type="text" id="pat-contact" placeholder="Phone">
+                        <!-- Doctor selection dropdown -->
+                        <div class="full-width">
+                            <select id="pat-doctor" required>
+                                <option value="">Select Doctor...</option>
+                                <!-- Doctor options will be populated dynamically -->
+                            </select>
+                        </div>
+                        <!-- Submit button -->
+                        <button type="submit" class="btn-primary full-width">Generate Token</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ==================== EXTERNAL JAVASCRIPT ==================== -->
+    <!-- Main application script (ES module) -->
+    <script type="module" src="script.js"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- SweetAlert2 for beautiful alerts/modals -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
